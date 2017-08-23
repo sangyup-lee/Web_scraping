@@ -54,11 +54,13 @@ word_tokens = nltk.word_tokenize(filtered_content)
 
 #------------------------------------------------
 # POS tagging
+# 영어의 경우는 nltk에서 제공하는 pos_tag() 함수를 사용해서 품사 태깅을 할 수 있습니다.
+# pos_tag()의 입력값으로는 단어의 리스트가 들어가야 합니다.
 tokens_pos = nltk.pos_tag(word_tokens)
 
 #-----------------------------------------
 # Lemmatization
-
+# nltk에서 제공되는 WordNetLemmatizer을 이용하는 경우 
 wlem = nltk.WordNetLemmatizer()
 lemmatized_tokens = []
 for word, pos in tokens_pos:
@@ -68,8 +70,7 @@ for word, pos in tokens_pos:
     #print('lemma: ', new_word)
     lemmatized_tokens.append((new_word,pos))
 
-#print(lemmatized_tokens)
-#------------------------------------------------
+
 #------------------------------------------------
 # 명사 단어만 추출하기
 NN_words = []
@@ -77,32 +78,32 @@ for word, pos in lemmatized_tokens:
     if pos.find('NN') >= 0:
         NN_words.append(word)
 #------------------------------------------------
-#print(NN_words)
+
 
 
 #------------------------------------------------
 # Stopwords removal
+# 1차적으로 nltk에서 제공하는 불용어사전을 이용해서 불용어를 제거할 수 있습니다.
 
-stopwords_list = stopwords.words('english')
+stopwords_list = stopwords.words('english') #nltk에서 제공하는 불용어사전 이용
 #print('stopwords: ', stopwords_list)
 unique_NN_words = set(NN_words)
 final_NN_words = NN_words
 
-print(final_NN_words)
+# 불용어 제거
 for word in unique_NN_words:
     if word in stopwords_list:
         while word in final_NN_words: final_NN_words.remove(word)
             
 
 #------------------------------------------------
-# 불용어 사전 직접 만들기
+# 제거하거자 하는 단어가 nltk에서 제공되는 사전에 포함되어 있지 않은 경우에, 아래와 같이 직접 만들어 사용할 수도 있습니다.
 customized_stopwords = ['be', 'today', 'yesterday', "it’s", "don’t"] # 직접 만든 불용어 사전
 unique_NN_words1 = set(final_NN_words)
 for word in unique_NN_words1:
     if word in customized_stopwords:
         while word in final_NN_words: final_NN_words.remove(word)
 #------------------------------------------------
-print(final_NN_words)
 
 #------------------------------------------------
 # 단어 빈도 파악하기
