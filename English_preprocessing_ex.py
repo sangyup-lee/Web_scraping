@@ -28,17 +28,18 @@ def get_wordnet_pos(treebank_tag):
         return 'n'
 
 article_dict = pickle.load(open('En_text.p', 'rb')) 
-# 같은 folder에서 En_text.p 파일도 다운로드 받아야 합니다. 해당 파일은 하나의 영문기사
-print(article_dict)
+# 같은 folder에서 En_text.p 파일도 다운로드 받아야 합니다. 해당 파일은 하나의 영문기사를 
+# dictionary 형태로 저장해 놓은 것입니다. 
 
-title = article_dict[1]['title']
-content = article_dict[1]['content']
+title = article_dict[1]['title'] # 기사의 제목을 가져옵니다.
+content = article_dict[1]['content'] # 기사 내용을 가지고 옵니다.
 
 #-------------------------------------
 # Text preprocessing
 #-------------------------------------
 
 # 1. 불필요한 symbols과 marks 제거하기
+# 다른 문자나 기호도 추가로 제거할 수 있습니다. 
 filtered_content = content.replace('!', '').replace(',','').replace('.','').replace('“','').replace('”','').replace('\n','')
 filtered_content = filtered_content.replace('The New York Times', '')
 
